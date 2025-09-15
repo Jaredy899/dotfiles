@@ -1,11 +1,28 @@
 #!/usr/bin/env bash
 # Colors and grep defaults
 
-export CLICOLOR=1
-export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:...'
+# -------------------------------------------------------------------
+# LS_COLORS
+# -------------------------------------------------------------------
+# Prefer vivid (modern theming)
+if command -v vivid >/dev/null 2>&1; then
+  # Pick a theme you like: one of (gruvbox-dark, one-dark, dracula, solarized-dark, etc.)
+  export LS_COLORS="$(vivid generate one-dark)"
+else
+  # Fallback to dircolors (system defaults)
+  if command -v dircolors >/dev/null 2>&1; then
+    eval "$(dircolors -b)"
+  else
+    # As an absolute last fallback, set some sane defaults manually
+    export LS_COLORS='di=34:ln=36:so=35:pi=33:ex=32:bd=33;01:cd=33;01:'
+  fi
+fi
 
+# -------------------------------------------------------------------
+# grep
+# -------------------------------------------------------------------
 if command -v rg &>/dev/null; then
-  alias grep='rg'
+  alias grep='rg --color=auto'
 else
   alias grep='grep --color=auto'
 fi
