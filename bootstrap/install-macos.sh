@@ -31,3 +31,4 @@ install_dep
 backup_and_link
 
 echo "✅ macOS dotfiles installed. Restart your terminal."
+

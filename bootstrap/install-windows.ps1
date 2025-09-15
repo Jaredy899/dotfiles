@@ -35,3 +35,4 @@ if (-not (Get-Module -ListAvailable Terminal-Icons)) {
 }
 
 Write-Host "✅ Windows dotfiles installed. Restart PowerShell."
+
