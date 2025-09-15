@@ -4,17 +4,30 @@
 # Safer core commands
 alias cp='cp -i'
 alias mv='mv -i'
-if command -v trash &>/dev/null; then
-  alias rm='trash -v'
-else
-  alias rm='rm -i'
-fi
 alias mkdir='mkdir -p'
 alias less='less -R'
 alias cls='clear'
 alias ps='ps auxf'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
+rm() {
+  if command -v trash >/dev/null 2>&1; then
+    local force_real=0
+    for arg in "$@"; do
+      case "$arg" in
+        -rf|-fr|-r|-f) force_real=1 ;;
+      esac
+    done
+
+    if (( force_real == 1 )); then
+      command rm "$@"
+    else
+      trash -v "$@"
+    fi
+  else
+    command rm "$@"
+  fi
+}
 
 # apt helpers
 alias apt-get='sudo apt-get'
