@@ -201,7 +201,7 @@ if ($Host.Name -eq 'ConsoleHost' -or $Host.Name -eq 'Windows Terminal') {
 } # End of outer if block
 
 # Initialize mise
-Invoke-Expression (& { (mise activate powershell | Out-String) })
+Invoke-Expression (& { (mise activate pwsh | Out-String) })
 
 # Initialize zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
