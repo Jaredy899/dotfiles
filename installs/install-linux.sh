@@ -5,52 +5,36 @@ DOTFILES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 detect_pm() {
-  if command -v apt >/dev/null 2>&1; then
-    echo apt
-  elif command -v pacman >/dev/null 2>&1; then
-    echo pacman
-  elif command -v dnf >/dev/null 2>&1; then
-    echo dnf
-  elif command -v apk >/dev/null 2>&1; then
-    echo apk
-  elif command -v eopkg >/dev/null 2>&1; then
-    echo eopkg
-  elif command -v xbps-install >/dev/null 2>&1; then
-    echo xbps-install
-  elif command -v zypper >/dev/null 2>&1; then
-    echo zypper
-  else
-    echo unknown
+  if command -v apt >/dev/null 2>&1; then echo apt
+  elif command -v pacman >/dev/null 2>&1; then echo pacman
+  elif command -v dnf >/dev/null 2>&1; then echo dnf
+  elif command -v apk >/dev/null 2>&1; then echo apk
+  elif command -v eopkg >/dev/null 2>&1; then echo eopkg
+  elif command -v xbps-install >/dev/null 2>&1; then echo xbps
+  elif command -v zypper >/dev/null 2>&1; then echo zypper
+  else echo unknown
   fi
 }
 PM=$(detect_pm)
 
 install_dep() {
   case "$PM" in
-  apt)
-    sudo apt update && sudo apt install -y git curl unzip fontconfig
-    ;;
-  pacman)
-    sudo pacman -Sy --noconfirm git curl unzip fontconfig
-    ;;
-  dnf)
-    sudo dnf install -y git curl unzip fontconfig
-    ;;
-  apk)
-    sudo apk add git curl unzip fontconfig
-    ;;
-  eopkg)
-    sudo eopkg install -y git curl unzip fontconfig
-    ;;
-  xbps-install)
-    sudo xbps-install -Sy git curl unzip fontconfig
-    ;;
-  zypper)
-    sudo zypper install -y git curl unzip fontconfig
-    ;;
-  *)
-    echo "⚠️ Unknown packager. Install git/curl/unzip/fontconfig manually."
-    ;;
+    apt)    
+      sudo apt update && sudo apt install -y git curl unzip fontconfig ;;
+    pacman) 
+      sudo pacman -Sy --noconfirm git curl unzip fontconfig ;;
+    dnf)    
+      sudo dnf install -y git curl unzip fontconfig ;;
+    apk)    
+      sudo apk add git curl unzip fontconfig ;;
+    eopkg)  
+      sudo eopkg install -y git curl unzip fontconfig ;;
+    xbps)   
+      sudo xbps-install -Sy git curl unzip fontconfig ;;
+    zypper) 
+      sudo zypper install -y git curl unzip fontconfig ;;
+    *)      
+      echo "⚠️ Unknown packager. Install git/curl/unzip/fontconfig manually." ;;
   esac
 }
 
@@ -88,14 +72,14 @@ install_tools() {
   fi
   if ! command -v fastfetch >/dev/null 2>&1; then
     case "$PM" in
-    apt) sudo apt install -y fastfetch ;;
-    pacman) sudo pacman -S --noconfirm fastfetch ;;
-    dnf) sudo dnf install -y fastfetch ;;
-    apk) sudo apk add fastfetch ;;
-    eopkg) sudo eopkg install -y fastfetch ;;
-    xbps-install) sudo xbps-install -Sy fastfetch ;;
-    zypper) sudo zypper install -y fastfetch ;;
-    *) echo "⚠️ Install fastfetch manually" ;;
+      apt)    sudo apt install -y fastfetch ;;
+      pacman) sudo pacman -S --noconfirm fastfetch ;;
+      dnf)    sudo dnf install -y fastfetch ;;
+      apk)    sudo apk add fastfetch ;;
+      eopkg)  sudo eopkg install -y fastfetch ;;
+      xbps)   sudo xbps-install -Sy fastfetch ;;
+      zypper) sudo zypper install -y fastfetch ;;
+      *)      echo "⚠️ Install fastfetch manually" ;;
     esac
   fi
 }

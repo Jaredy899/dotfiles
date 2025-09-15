@@ -6,7 +6,7 @@
 [[ -r /etc/bashrc ]] && . /etc/bashrc
 
 # Path to dotfiles repo
-DOTFILES="$HOME/dotfiles"
+DOTFILES="$HOME/.local/share/dotfiles"
 
 # Load modular bashrc fragments
 if [[ -d "$DOTFILES/bash/.bashrc.d" ]]; then
@@ -16,3 +16,4 @@ if [[ -d "$DOTFILES/bash/.bashrc.d" ]]; then
   done
   unset rc
 fi
+

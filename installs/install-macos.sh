@@ -1,8 +1,8 @@
 #!/bin/bash -e
-# Bootstrap installer for macOS (zsh default)
+# macOS bootstrap for dotfiles
 
-DOTFILES_DIR="$HOME/dotfiles"
-CONFIG_DIR="$HOME/.config"
+DOTFILES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 install_homebrew() {
   if ! command -v brew >/dev/null 2>&1; then
@@ -12,7 +12,7 @@ install_homebrew() {
 }
 
 install_dep() {
-  brew install git curl unzip starship zoxide fastfetch mise fzf bat eza tree
+  brew install git curl unzip starship zoxide mise fastfetch fzf bat eza tree
   brew tap homebrew/cask-fonts && brew install --cask font-meslo-lg-nerd-font
 }
 
@@ -29,6 +29,4 @@ backup_and_link() {
 install_homebrew
 install_dep
 backup_and_link
-
-echo "✅ macOS dotfiles installed. Restart your terminal."
-
+echo "✅ macOS dotfiles installed. Restart terminal."
