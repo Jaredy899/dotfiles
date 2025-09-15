@@ -38,6 +38,30 @@ fi
 alias ezrc='nano ~/.zshrc'
 alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 
+rm() {
+  if command -v trash >/dev/null 2>&1; then
+    case "$*" in
+      *-r*|-f*|-rf*|-fr*)
+        command rm "$@"   # use real rm for recursive/force
+        ;;
+      *)
+        trash -v "$@"     # safe delete
+        ;;
+    esac
+  else
+    command rm "$@"       # fallback to system rm
+  fi
+}
+
+# Shortcut: rmd = rm -rf
+rmd() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: rmd <file|dir> [...]"
+    return 1
+  fi
+  command rm -rf "$@"
+}
+
 # macOS-specific updater
 updatebrew() {
   echo "🔄 Updating Homebrew..."
