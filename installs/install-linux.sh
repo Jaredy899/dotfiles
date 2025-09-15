@@ -26,7 +26,7 @@ install_dep() {
     dnf)    
       sudo dnf install -y git curl unzip fontconfig ;;
     apk)    
-      sudo apk add git curl unzip fontconfig ;;
+      doas apk add git curl unzip fontconfig ;;
     eopkg)  
       sudo eopkg install -y git curl unzip fontconfig ;;
     xbps)   
