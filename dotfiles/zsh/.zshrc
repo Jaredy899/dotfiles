@@ -47,7 +47,6 @@ updatebrew() {
   brew cleanup --prune=all
   brew autoremove
 }
-
 alias apps='updatebrew'
 
 # mac-specific IP helper
@@ -70,6 +69,11 @@ bindkey -e   # Emacs-style bindings (use `bindkey -v` for vi-style)
 # Starship for zsh (if installed)
 if command -v starship &>/dev/null; then
   eval "$(starship init zsh)"
+fi
+
+# Zoxide (smarter cd), must follow Starship
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
 fi
 
 # Mise runtime manager (if installed)
