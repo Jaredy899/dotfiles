@@ -15,11 +15,11 @@ rm() {
     local force_real=0
     for arg in "$@"; do
       case "$arg" in
-        -rf|-fr|-r|-f) force_real=1 ;;
+      -rf | -fr | -r | -f) force_real=1 ;;
       esac
     done
 
-    if (( force_real == 1 )); then
+    if ((force_real == 1)); then
       command rm "$@"
     else
       trash -v "$@"
@@ -53,6 +53,7 @@ alias hlp='less ~/.bashrc_help'
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias sha1='openssl sha1'
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
+alias pfind='pkg-tui'
 
 # ls family
 if command -v eza &>/dev/null; then
@@ -141,3 +142,12 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias whatismyip='whatsmyip'
+
+# Only alias if sudo-rs exists
+if command -v sudo-rs >/dev/null 2>&1; then
+  alias sudo="sudo-rs"
+fi
+
+if command -v su-rs >/dev/null 2>&1; then
+  alias su="su-rs"
+fi
