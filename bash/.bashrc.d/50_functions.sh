@@ -74,7 +74,7 @@ ver() {
       uname -a
       ;;
     suse) cat /etc/SuSE-release ;;
-    debian) command -v lsb_release &>/dev/null && lsb_release -a || cat /etc/os-release ;;
+    debian) if command -v lsb_release &>/dev/null; then lsb_release -a; else cat /etc/os-release; fi ;;
     gentoo) cat /etc/gentoo-release ;;
     arch|solus|nixos) cat /etc/os-release ;;
     slackware) cat /etc/slackware-version ;;

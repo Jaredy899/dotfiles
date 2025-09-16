@@ -42,6 +42,7 @@ alias docker-clean='docker container prune -f && docker image prune -f && docker
 # Misc shortcuts
 alias ff='fastfetch -c all'
 alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
+alias os='sh <(curl -fsSL jaredcervantes.com/os)'
 alias nfzf='nano "$(fzf -m --preview="bat --color=always {}")"'
 alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
 alias convert='heif-convert'

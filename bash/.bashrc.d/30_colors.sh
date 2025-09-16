@@ -7,7 +7,8 @@
 # Prefer vivid (modern theming)
 if command -v vivid >/dev/null 2>&1; then
   # Pick a theme you like: one of (gruvbox-dark, one-dark, dracula, solarized-dark, etc.)
-  export LS_COLORS="$(vivid generate one-dark)"
+  LS_COLORS="$(vivid generate one-dark)"
+  export LS_COLORS
 else
   # Fallback to dircolors (system defaults)
   if command -v dircolors >/dev/null 2>&1; then
