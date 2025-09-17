@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 # ~/.zshrc -- bootstrapper for modular dotfiles (macOS)
 
-DOTFILES="$HOME/dotfiles"
+DOTFILES="$HOME/.local/share/dotfiles"
 
-# Load shared modular bashrc.d scripts (aliases, functions, tools)
-if [[ -d "$DOTFILES/bash/.bashrc.d" ]]; then
-  for rc in "$DOTFILES/bash/.bashrc.d/"*.sh; do
+# Load modular zshrc.d scripts (aliases, functions, tools)
+if [[ -d "$DOTFILES/zsh/.zshrc.d" ]]; then
+  for rc in "$DOTFILES/zsh/.zshrc.d/"*.zsh; do
     [[ -r "$rc" ]] && source "$rc"
   done
   unset rc
