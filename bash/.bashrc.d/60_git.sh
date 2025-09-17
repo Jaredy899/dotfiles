@@ -4,6 +4,8 @@
 gb() { git branch "$@"; }
 gp() { git pull "$@"; }
 
+alias gdp='(cd ~/.local/share/dotfiles && git pull)'
+
 gbd() {
   [ -z "$1" ] && {
     echo "Usage: gbd <branch>"
