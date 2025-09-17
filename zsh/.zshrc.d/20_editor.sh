@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 # Editor and pager settings
 
 if command -v nvim &>/dev/null; then

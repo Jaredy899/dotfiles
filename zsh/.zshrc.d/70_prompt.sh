@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 # Prompt hooks and auto-ls
 
 __pcd_prev_pwd=""

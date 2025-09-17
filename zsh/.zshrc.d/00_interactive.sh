@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 # Exit early if not interactive
 [[ -o interactive ]] || return 0
 
@@ -8,7 +9,6 @@ if command -v fastfetch &>/dev/null; then
 fi
 
 # Source global zshrc if available
-# shellcheck disable=SC1091
 [[ -r /etc/zshrc ]] && . /etc/zshrc
 
 # Zsh-specific terminal behavior (equivalent to readline bindings)

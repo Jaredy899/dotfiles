@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 # History + general environment
 
 # History settings (zsh equivalents)

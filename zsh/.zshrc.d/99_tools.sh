@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 # Extra dev tools and integrations
 
 alias bd='bun dev'
 alias cr='cargo run'
 
 # Fzf bindings (zsh version)
-# shellcheck disable=SC1090
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Starship prompt
@@ -23,7 +23,6 @@ if [[ "$(tty)" == "/dev/tty1" ]] && [[ -f "$HOME/.xinitrc" ]] && grep -q "^exec 
 fi
 
 # Cargo environment
-# shellcheck disable=SC1091
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # -------------------------------------------------------------------

@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
+# shellcheck disable=SC1071
 ## Distribution detection
 distribution() {
   local dtype=unknown
   if [[ -r /etc/os-release ]]; then
-    # shellcheck disable=SC1091
     . /etc/os-release
     case "$ID" in
       fedora|rhel|centos) dtype=redhat ;;
@@ -168,25 +168,41 @@ ftext() {
   grep -iIHrn --color=always -- "$1" . | less -r
 }
 
-# copy with progress (requires strace)
+# copy with progress (requires strace on Linux, dtruss on macOS)
 cpp() {
   set -e
   local src="$1" dst="$2"
   [[ -n $src && -n $dst ]] || { echo "Usage: cpp <src> <dst>"; return 1; }
-  strace -q -ewrite cp -- "$src" "$dst" 2>&1 |
-    awk -v total_size="$(stat -f '%z' "$src")" '  # Use stat -f for macOS/zsh compatibility
-      { count += $NF
-        if (count % 10 == 0) {
-          percent = (count / total_size) * 100
-          if (percent > 100) percent = 100
-          printf "%3d%% [", percent
-          for (i = 0; i <= percent; i++) printf "="
-          printf ">"
-          for (i = percent; i < 100; i++) printf " "
-          printf "]\r"
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS version using a simple progress indicator
+    local total_size=$(stat -f '%z' "$src")
+    echo "Copying $src to $dst..."
+    cp -v "$src" "$dst" 2>&1 | awk -v total="$total_size" '
+      /->/ {
+        if (match($0, /([0-9]+) bytes/, arr)) {
+          percent = (arr[1] / total) * 100
+          printf "%.1f%% copied\r", percent
         }
       }
-      END { print "" }'
+      END { print "Copy complete" }'
+  else
+    # Linux version using strace
+    strace -q -ewrite cp -- "$src" "$dst" 2>&1 |
+      awk -v total_size="$(stat -c '%s' "$src")" '
+        { count += $NF
+          if (count % 10 == 0) {
+            percent = (count / total_size) * 100
+            if (percent > 100) percent = 100
+            printf "%3d%% [", percent
+            for (i = 0; i <= percent; i++) printf "="
+            printf ">"
+            for (i = percent; i < 100; i++) printf " "
+            printf "]\r"
+          }
+        }
+        END { print "" }'
+  fi
 }
 
 # copy and go
