@@ -11,6 +11,7 @@ distribution() {
       ubuntu|debian) dtype=debian ;;
       gentoo) dtype=gentoo ;;
       arch|manjaro) dtype=arch ;;
+      void) dtype=void ;;
       slackware) dtype=slackware ;;
       solus) dtype=solus ;;
       nixos) dtype=nixos ;;
@@ -23,6 +24,7 @@ distribution() {
         *ubuntu*|*debian*) dtype=debian ;;
         *gentoo*) dtype=gentoo ;;
         *arch*) dtype=arch ;;
+        *void*) dtype=void ;;
         *slackware*) dtype=slackware ;;
         *solus*) dtype=solus ;;
       esac
