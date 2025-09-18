@@ -31,14 +31,5 @@ fi
 alias ezrc='nano ~/.zshrc'
 alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 
-# Shortcut: rmd = rm -rf
-rmd() {
-  if [[ -z "$1" ]]; then
-    echo "Usage: rmd <file|dir> [...]"
-    return 1
-  fi
-  command rm -rf "$@"
-}
-
 # Preferred keybindings
 bindkey -e   # Emacs-style bindings (use `bindkey -v` for vi-style)

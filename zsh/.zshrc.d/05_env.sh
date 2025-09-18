@@ -20,8 +20,6 @@ setopt HIST_SAVE_NO_DUPS     # Don't save duplicates to file
 setopt AUTO_CD
 # Enable globbing
 setopt GLOB
-# Check window size after commands
-setopt CHECK_WINSIZE
 
 # Zsh equivalent of PROMPT_COMMAND using precmd hooks
 # Helper to add functions to precmd
