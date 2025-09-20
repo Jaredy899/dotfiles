@@ -32,14 +32,12 @@ distribution() {
   fi
   printf '%s\n' "$dtype"
 }
-DISTRIBUTION="$(distribution)"
 
 # Prefer bat/batcat for cat if present
-if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
-  case "$DISTRIBUTION" in
-    redhat|arch|solus|nixos|void) alias cat='bat' ;;
-    *) alias cat='batcat' ;;
-  esac
+if command -v bat &>/dev/null; then
+  alias cat='bat'
+elif command -v batcat &>/dev/null; then
+  alias cat='batcat'
 fi
 
 catp() {

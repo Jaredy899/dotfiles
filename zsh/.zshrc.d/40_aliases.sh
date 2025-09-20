@@ -73,7 +73,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
   alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//")"'
 fi
-alias ebrc='${EDITOR:-nano} ~/.zshrc'
+alias ebrc='${EDITOR} ~/.zshrc'
 alias hlp='less ~/.zshrc_help'
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias sha1='openssl sha1'
@@ -126,7 +126,11 @@ else
 fi
 
 # Remove a directory and all files
-alias rmd='rm -rfv'
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias rmd='/bin/rm -rf'  # macOS BSD rm with full path
+else
+  alias rmd='/bin/rm --recursive --force --verbose'  # Linux GNU rm with verbose
+fi
 
 # chmod helpers
 alias mx='sudo chmod a+x'
