@@ -3,7 +3,9 @@
 ## Distribution detection
 distribution() {
   local dtype=unknown
-  if [[ -r /etc/os-release ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    dtype=darwin
+  elif [[ -r /etc/os-release ]]; then
     . /etc/os-release
     case "$ID" in
       fedora|rhel|centos) dtype=redhat ;;
@@ -39,6 +41,26 @@ if command -v bat &>/dev/null; then
 elif command -v batcat &>/dev/null; then
   alias cat='batcat'
 fi
+
+# Safe rm function - use trash for safe deletion, rm for force operations
+rm() {
+    if command -v trash &>/dev/null; then
+        local force_real=0
+        for arg in "$@"; do
+            case "$arg" in
+            -rf | -fr | -r | -f) force_real=1 ;;
+            esac
+        done
+
+        if (( force_real == 1 )); then
+            command rm "$@"
+        else
+            trash -v "$@"
+        fi
+    else
+        command rm "$@"
+    fi
+}
 
 catp() {
     if command -v bat &>/dev/null; then
@@ -78,6 +100,10 @@ ver() {
     gentoo) cat /etc/gentoo-release ;;
     arch|solus|nixos) cat /etc/os-release ;;
     slackware) cat /etc/slackware-version ;;
+    darwin)
+      echo "macOS $(sw_vers -productVersion) ($(sw_vers -buildVersion))"
+      uname -a
+      ;;
     *)
       if [[ -s /etc/issue ]]; then
         cat /etc/issue

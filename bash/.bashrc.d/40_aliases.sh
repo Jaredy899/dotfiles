@@ -9,30 +9,11 @@ alias less='less -R'
 alias cls='clear'
 alias ps='ps auxf'
 alias multitail='multitail --no-repeat -c'
-alias freshclam='sudo freshclam'
-rm() {
-  if command -v trash >/dev/null 2>&1; then
-    local force_real=0
-    for arg in "$@"; do
-      case "$arg" in
-      -rf | -fr | -r | -f) force_real=1 ;;
-      esac
-    done
-
-    if ((force_real == 1)); then
-      command rm "$@"
-    else
-      trash -v "$@"
-    fi
-  else
-    command rm "$@"
-  fi
-}
-
+alias freshclam='$ESCALATION_CMD freshclam'
 # apt helpers
-alias apt-get='sudo apt-get'
+alias apt-get='$ESCALATION_CMD apt-get'
 if command -v nala &>/dev/null; then
-  apt() { sudo nala "$@"; }
+  apt() { $ESCALATION_CMD nala "$@"; }
 fi
 
 # Docker helpers
@@ -43,13 +24,13 @@ alias docker-clean='docker container prune -f && docker image prune -f && docker
 alias ff='fastfetch -c all'
 alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
 alias os='sh <(curl -fsSL jaredcervantes.com/os)'
-alias nfzf='nano "$(fzf -m --preview="bat --color=always {}")"'
+alias nfzf='$EDITOR "$(fzf -m --preview="bat --color=always {}")"'
 alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
 alias convert='heif-convert'
-alias rebuild='sudo nixos-rebuild switch'
+alias rebuild='$ESCALATION_CMD nixos-rebuild switch'
 alias web='cd /var/www/html'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//")"'
-alias ebrc='${EDITOR:-nano} ~/.bashrc'
+alias bashrc='${EDITOR} ~/.local/share/dotfiles/bash/.bashrc.d'
 alias hlp='less ~/.bashrc_help'
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias sha1='openssl sha1'
@@ -100,15 +81,15 @@ else
 fi
 
 # Remove a directory and all files
-alias rmd='sudo /bin/rm --recursive --force --verbose '
+alias rmd='$ESCALATION_CMD /bin/rm --recursive --force --verbose '
 
 # chmod helpers
-alias mx='sudo chmod a+x'
-alias 000='sudo chmod -R 000'
-alias 644='sudo chmod -R 644'
-alias 666='sudo chmod -R 666'
-alias 755='sudo chmod -R 755'
-alias 777='sudo chmod -R 777'
+alias mx='$ESCALATION_CMD chmod a+x'
+alias 000='$ESCALATION_CMD chmod -R 000'
+alias 644='$ESCALATION_CMD chmod -R 644'
+alias 666='$ESCALATION_CMD chmod -R 666'
+alias 755='$ESCALATION_CMD chmod -R 755'
+alias 777='$ESCALATION_CMD chmod -R 777'
 
 # Search helpers
 alias h="history | grep -- "
@@ -120,8 +101,8 @@ alias countfiles='for t in files links directories; do echo "$(find . -type ${t:
 
 # Networking & disks
 alias openports='netstat -nape --inet'
-alias rebootsafe='sudo shutdown -r now'
-alias rebootforce='sudo shutdown -r -n now'
+alias rebootsafe='$ESCALATION_CMD shutdown -r now'
+alias rebootforce='$ESCALATION_CMD shutdown -r -n now'
 alias diskspace="du -S | sort -n -r | more"
 alias folders='du -h --max-depth=1'
 alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'

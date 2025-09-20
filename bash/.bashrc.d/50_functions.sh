@@ -42,6 +42,26 @@ if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
   esac
 fi
 
+# Safe rm function - use trash for safe deletion, rm for force operations
+rm() {
+  if command -v trash >/dev/null 2>&1; then
+    local force_real=0
+    for arg in "$@"; do
+      case "$arg" in
+      -rf | -fr | -r | -f) force_real=1 ;;
+      esac
+    done
+
+    if ((force_real == 1)); then
+      command rm "$@"
+    else
+      trash -v "$@"
+    fi
+  else
+    command rm "$@"
+  fi
+}
+
 catp() {
   if command -v bat &>/dev/null; then
     if [ -t 1 ]; then

@@ -19,17 +19,14 @@ fi
 autoload -Uz compinit
 compinit -d "${ZDOTDIR:-$HOME}/.zcompdump"
 
-# Plugins (installed via brew maybe?)
-if [[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# macOS-specific plugins (installed via Homebrew)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
+  if [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
 fi
-if [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-# macOS-specific aliases
-alias ezrc='nano ~/.zshrc'
-alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
-
 # Preferred keybindings
 bindkey -e   # Emacs-style bindings (use `bindkey -v` for vi-style)

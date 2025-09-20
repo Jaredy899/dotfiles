@@ -10,16 +10,15 @@ alias less='less -R'
 alias cls='clear'
 alias ps='ps auxf'
 alias multitail='multitail --no-repeat -c'
-alias freshclam='sudo freshclam'
-alias rm='trash'  # Use trash instead of custom rm function for zsh
+alias freshclam='$ESCALATION_CMD freshclam'
 
 # Package manager helpers
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias brewup='brew update && brew upgrade && brew cleanup'
 else
-  alias apt-get='sudo apt-get'
+  alias apt-get='$ESCALATION_CMD apt-get'
   if command -v nala &>/dev/null; then
-    apt() { sudo nala "$@"; }
+    apt() { $ESCALATION_CMD nala "$@"; }
   fi
 fi
 
@@ -30,12 +29,12 @@ alias docker-clean='docker container prune -f && docker image prune -f && docker
 # Misc shortcuts
 alias ff='fastfetch -c all'
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias jc='sh <(curl -fsSL jaredcervantes.com/macos)'
+  alias jc='sh <(curl -fsSL jaredcervantes.com/mac)'
 else
   alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
 fi
 alias os='sh <(curl -fsSL jaredcervantes.com/os)'
-alias nfzf='nano "$(fzf -m --preview="bat --color=always {}")"'
+alias nfzf='${EDITOR} "$(fzf -m --preview="bat --color=always {}")"'
 # macOS-specific updater
 updatebrew() {
   echo "🔄 Updating Homebrew..."
@@ -53,7 +52,7 @@ else
 fi
 alias convert='heif-convert'
 if [[ "$OSTYPE" != "darwin"* ]]; then
-  alias rebuild='sudo nixos-rebuild switch'
+  alias rebuild='$ESCALATION_CMD nixos-rebuild switch'
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias web='cd /Library/WebServer/Documents'  # macOS default web root
@@ -73,7 +72,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
   alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//")"'
 fi
-alias ebrc='${EDITOR} ~/.zshrc'
+alias zshrc='${EDITOR} ~/.local/share/dotfiles/zsh/.zshrc.d'
+
+# Platform-specific aliases
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias flushdns='$ESCALATION_CMD dscacheutil -flushcache; $ESCALATION_CMD killall -HUP mDNSResponder'
+else
+  alias flushdns='$ESCALATION_CMD systemd-resolve --flush-caches'
+fi
 alias hlp='less ~/.zshrc_help'
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias sha1='openssl sha1'
@@ -133,12 +139,12 @@ else
 fi
 
 # chmod helpers
-alias mx='sudo chmod a+x'
-alias 000='sudo chmod -R 000'
-alias 644='sudo chmod -R 644'
-alias 666='sudo chmod -R 666'
-alias 755='sudo chmod -R 755'
-alias 777='sudo chmod -R 777'
+alias mx='$ESCALATION_CMD chmod a+x'
+alias 000='$ESCALATION_CMD chmod -R 000'
+alias 644='$ESCALATION_CMD chmod -R 644'
+alias 666='$ESCALATION_CMD chmod -R 666'
+alias 755='$ESCALATION_CMD chmod -R 755'
+alias 777='$ESCALATION_CMD chmod -R 777'
 
 # Search helpers
 alias h="history | grep -- "
@@ -153,8 +159,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
   alias openports='netstat -nape --inet'
 fi
-alias rebootsafe='sudo shutdown -r now'
-alias rebootforce='sudo shutdown -r -n now'
+alias rebootsafe='$ESCALATION_CMD shutdown -r now'
+alias rebootforce='$ESCALATION_CMD shutdown -r -n now'
 alias diskspace="du -S | sort -n -r | more"
 alias folders='du -h --max-depth=1'
 alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
