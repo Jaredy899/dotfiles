@@ -5,8 +5,9 @@ alias bd='bun dev'
 alias cr='cargo run'
 
 # Fzf bindings
-# shellcheck disable=SC1090
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
 
 # Starship prompt
 if command -v starship &>/dev/null; then
