@@ -5,8 +5,10 @@
 alias bd='bun dev'
 alias cr='cargo run'
 
-# Fzf bindings (zsh version)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Fzf bindings
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+fi
 
 # Starship prompt
 if command -v starship &>/dev/null; then
