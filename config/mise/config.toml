@@ -1,8 +1,8 @@
 [tools]
-zig = "latest"
+zig = "0.14.1"
 node = "latest"
 bun = "latest"
-go = "latest"
+# go = "latest"
 # ruby = "latest"
 # erlang = "latest"
 # elixir = "latest"
