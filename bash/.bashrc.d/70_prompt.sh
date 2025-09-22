@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Prompt hooks and auto-ls
 
-__pcd_prev_pwd=""
+__pcd_prev_pwd="$PWD"
 
 list_if_cd() {
   if [[ "$PWD" != "$__pcd_prev_pwd" ]]; then
@@ -11,4 +11,3 @@ list_if_cd() {
 }
 
 pc_add 'list_if_cd'
-
