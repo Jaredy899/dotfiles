@@ -36,6 +36,7 @@ alias da='date "+%Y-%m-%d %A %T %Z"'
 alias sha1='openssl sha1'
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 alias pfind='pkg-tui'
+alias ze='zellij'
 
 # ls family
 if command -v eza &>/dev/null; then

@@ -87,6 +87,7 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
   alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 fi
 alias pfind='pkg-tui'
+alias ze='zellij'
 
 # ls family
 if command -v eza &>/dev/null; then
