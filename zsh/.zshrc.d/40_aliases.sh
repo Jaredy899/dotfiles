@@ -25,6 +25,9 @@ fi
 # Docker helpers
 alias dup='docker compose up -d --force-recreate'
 alias docker-clean='docker container prune -f && docker image prune -f && docker network prune -f && docker volume prune -f'
+alias lzd='lazydocker'
+alias lzg='lazygit'
+alias lzs='lazyssh'
 
 # Misc shortcuts
 alias ff='fastfetch -c all'
