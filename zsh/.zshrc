@@ -2,7 +2,7 @@
 # shellcheck disable=SC1071
 # ~/.zshrc -- bootstrapper for modular dotfiles (macOS)
 
-DOTFILES="$HOME/.local/share/dotfiles"
+DOTFILES="$HOME/dotfiles"
 
 # Load modular zshrc.d scripts (aliases, functions, tools)
 if [[ -d "$DOTFILES/zsh/.zshrc.d" ]]; then
