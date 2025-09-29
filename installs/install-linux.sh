@@ -20,27 +20,27 @@ PM=$(detect_pm)
 install_dep() {
   case "$PM" in
     apt)    
-      sudo apt update && sudo apt install -y git curl unzip fontconfig ;;
+      sudo apt update && sudo apt install -y git curl unzip fontconfig fish ;;
     pacman) 
-      sudo pacman -Sy --noconfirm git curl unzip fontconfig ;;
+      sudo pacman -Sy --noconfirm git curl unzip fontconfig fish ;;
     dnf)    
-      sudo dnf install -y git curl unzip fontconfig ;;
+      sudo dnf install -y git curl unzip fontconfig fish ;;
     apk)    
-      doas apk add git curl unzip fontconfig ;;
+      doas apk add git curl unzip fontconfig fish ;;
     eopkg)  
-      sudo eopkg install -y git curl unzip fontconfig ;;
+      sudo eopkg install -y git curl unzip fontconfig fish ;;
     xbps)   
-      sudo xbps-install -Sy git curl unzip fontconfig ;;
+      sudo xbps-install -Sy git curl unzip fontconfig fish ;;
     zypper) 
-      sudo zypper install -y git curl unzip fontconfig ;;
+      sudo zypper install -y git curl unzip fontconfig fish ;;
     *)      
-      echo "⚠️ Unknown packager. Install git/curl/unzip/fontconfig manually." ;;
+      echo "⚠️ Unknown packager. Install git/curl/unzip/fontconfig/fish manually." ;;
   esac
 }
 
 backup_and_link() {
   echo "📂 Linking configs..."
-  mkdir -p "$CONFIG_DIR/fastfetch" "$CONFIG_DIR/mise"
+  mkdir -p "$CONFIG_DIR/fastfetch" "$CONFIG_DIR/mise" "$CONFIG_DIR/fish"
 
   ln -sf "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 
@@ -52,6 +52,11 @@ backup_and_link() {
   # If zsh installed, set up .zshrc too
   if command -v zsh >/dev/null 2>&1; then
     ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+  fi
+
+  # If fish installed, set up fish config
+  if command -v fish >/dev/null 2>&1; then
+    ln -sf "$DOTFILES_DIR/fish/config.fish" "$CONFIG_DIR/fish/config.fish"
   fi
 
   # Starship/Mise/Fastfetch configs
