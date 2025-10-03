@@ -12,15 +12,16 @@ install_homebrew() {
 }
 
 install_dep() {
-  brew install git curl unzip starship zoxide mise fastfetch fzf bat eza tree
+  brew install git curl unzip starship zoxide mise fastfetch fzf bat eza tree fish
   brew tap homebrew/cask-fonts && brew install --cask font-meslo-lg-nerd-font
 }
 
 backup_and_link() {
   echo "📂 Linking configs..."
-  mkdir -p "$CONFIG_DIR/fastfetch" "$CONFIG_DIR/mise"
+  mkdir -p "$CONFIG_DIR/fastfetch" "$CONFIG_DIR/mise" "$CONFIG_DIR/fish"
 
   ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+  ln -sf "$DOTFILES_DIR/fish/config.fish" "$CONFIG_DIR/fish/config.fish"
   ln -sf "$DOTFILES_DIR/config/starship.toml" "$CONFIG_DIR/starship.toml"
   ln -sf "$DOTFILES_DIR/config/mise/config.toml" "$CONFIG_DIR/mise/config.toml"
   ln -sf "$DOTFILES_DIR/config/fastfetch/macos.jsonc" "$CONFIG_DIR/fastfetch/config.jsonc"
