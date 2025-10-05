@@ -65,7 +65,7 @@ alias shutdown="doas poweroff"
 # -------------------------------------------------------------------
 # Editor/Finder Aliases
 # -------------------------------------------------------------------
-alias nfzf='nano $(fzf -m --preview="bat --color=always {}")'
+alias nfzf='$EDITOR $(fzf -m --preview="bat --color=always {}")'
 
 # -------------------------------------------------------------------
 # Directory Navigation

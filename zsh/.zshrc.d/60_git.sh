@@ -5,7 +5,7 @@
 gb() { git branch "$@"; }
 gp() { git pull "$@"; }
 
-alias gdp='(cd ~/.local/share/dotfiles && git pull); source ~/.zshrc'
+alias gdp='(cd ~/dotfiles && git pull); source ~/.zshrc'
 
 gbd() {
   [ -z "$1" ] && {
