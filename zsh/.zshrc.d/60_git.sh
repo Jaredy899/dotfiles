@@ -13,6 +13,7 @@ gbd() {
     return 1
   }
   git branch -D "$1"
+  git push -d origin "$1" 2>/dev/null || echo "Remote branch '$1' not found or already deleted"
 }
 
 gcom() {

@@ -8,6 +8,10 @@ function gbd {
         [string]$branch
     )
     git branch -D $branch
+    git push -d origin $branch 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Remote branch '$branch' not found or already deleted" -ForegroundColor Yellow
+    }
 }
 
 function gcom {

@@ -355,7 +355,7 @@ trim() {
 # Git helpers
 gb() { git branch "$@"; }
 gp() { git pull "$@"; }
-gbd() { [ -z "$1" ] && { echo "Usage: gbd <branch>"; return 1; } && git branch -D "$1"; }
+gbd() { [ -z "$1" ] && { echo "Usage: gbd <branch>"; return 1; } && git branch -D "$1" && git push -d origin "$1" 2>/dev/null || echo "Remote branch '$1' not found or already deleted"; }
 gcom() { [ -z "$1" ] && { echo "Usage: gcom <message>"; return 1; } && git add . && git commit -m "$1"; }
 lazyg() { [ -z "$1" ] && { echo "Usage: lazyg <message>"; return 1; } && git add . && git commit -m "$1" && git push; }
 newb() { [ -z "$1" ] || [ -z "$2" ] && { echo "Usage: newb <branch> <message>"; return 1; } && git checkout -b "$1" && git add . && git commit -m "$2" && git push -u origin "$1"; }

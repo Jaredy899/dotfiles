@@ -17,6 +17,7 @@ function gbd
         return 1
     end
     git branch -D "$argv[1]"
+    git push -d origin "$argv[1]" 2>/dev/null; or echo "Remote branch '$argv[1]' not found or already deleted"
 end
 
 function gcom
