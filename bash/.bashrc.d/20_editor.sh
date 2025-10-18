@@ -7,7 +7,7 @@ if command -v nvim &>/dev/null; then
   export SUDO_EDITOR="nvim"
   alias vim='nvim'
   alias vi='nvim'
-  alias svi='$ESCALATION_CMD -E nvim'
+  alias svi='sudoedit'
   alias vis='nvim "+set si"'
 else
   export EDITOR="vim"
