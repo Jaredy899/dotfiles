@@ -51,3 +51,23 @@ gs() {
     git switch "$clean_branch"
   fi
 }
+
+gsc() {
+  [ -z "$1" ] && {
+    echo "Usage: gsc <branch>"
+    return 1
+  }
+  git switch -c "$1"
+}
+
+gpo() {
+  [ -z "$1" ] && {
+    echo "Usage: gpo <branch>"
+    return 1
+  }
+  git push -u origin "$1"
+}
+
+gpf() {
+  git push --force-with-lease
+}
