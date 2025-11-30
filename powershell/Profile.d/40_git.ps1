@@ -89,3 +89,23 @@ function gp {
     )
     git pull @Args
 }
+
+function gsc {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$branch
+    )
+    git switch -c $branch
+}
+
+function gpo {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$branch
+    )
+    git push -u origin $branch
+}
+
+function gpf {
+    git push --force-with-lease
+}

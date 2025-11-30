@@ -360,6 +360,9 @@ gcom() { [ -z "$1" ] && { echo "Usage: gcom <message>"; return 1; } && git add .
 lazyg() { [ -z "$1" ] && { echo "Usage: lazyg <message>"; return 1; } && git add . && git commit -m "$1" && git push; }
 newb() { [ -z "$1" ] || [ -z "$2" ] && { echo "Usage: newb <branch> <message>"; return 1; } && git checkout -b "$1" && git add . && git commit -m "$2" && git push -u origin "$1"; }
 gs() { branch=$(git branch --all --color=never | sed 's/^[* ]*//' | sort | fzf --prompt="Switch to branch: "); [ -n "$branch" ] && git switch "$branch"; }
+gsc() { [ -z "$1" ] && { echo "Usage: gsc <branch>"; return 1; } && git switch -c "$1"; }
+gpo() { [ -z "$1" ] && { echo "Usage: gpo <branch>"; return 1; } && git push -u origin "$1"; }
+gpf() { git push --force-with-lease; }
 
 # -------------------------------------------------------------------
 # Fastfetch and Zoxide
