@@ -9,7 +9,10 @@ function gp
     git pull $argv
 end
 
-alias gdp='(cd ~/dotfiles && git pull); source ~/.config/fish/config.fish'
+function gdp
+    cd ~/dotfiles && git pull
+    source ~/.config/fish/config.fish
+end
 
 function gbd
     if test -z "$argv[1]"
