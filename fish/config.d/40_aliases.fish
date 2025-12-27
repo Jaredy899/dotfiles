@@ -33,11 +33,11 @@ alias lzs='lazyssh'
 # Misc shortcuts
 alias ff='fastfetch -c all'
 if test (uname) = "Darwin"
-    alias jc='sh <(curl -fsSL jaredcervantes.com/mac)'
+    alias jc='sh (curl -fsSL jaredcervantes.com/mac | psub)'
 else
-    alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
+    alias jc='sh (curl -fsSL jaredcervantes.com/linux | psub)'
 end
-alias os='sh <(curl -fsSL jaredcervantes.com/os)'
+alias os='sh (curl -fsSL jaredcervantes.com/os | psub)'
 alias nfzf='$EDITOR (fzf -m --preview="bat --color=always {}")'
 
 # macOS-specific updater
