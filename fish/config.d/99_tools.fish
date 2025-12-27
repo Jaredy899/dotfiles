@@ -10,6 +10,10 @@ if command -v mise >/dev/null 2>&1
     mise activate fish | source
 end
 
+if command -v starship >/dev/null 2>&1
+    starship init fish | source
+end
+
 # Fish-specific tool integrations
 if command -v fzf >/dev/null 2>&1
     # FZF key bindings for Fish
