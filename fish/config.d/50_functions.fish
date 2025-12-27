@@ -12,7 +12,7 @@ function distribution
         switch $id
             case fedora rhel centos
                 set dtype redhat
-            case sles opensuse*
+            case sles 'opensuse*'
                 set dtype suse
             case ubuntu debian
                 set dtype debian
