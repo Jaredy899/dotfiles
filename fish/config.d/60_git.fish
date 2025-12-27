@@ -9,7 +9,10 @@ function gp
     git pull $argv
 end
 
-alias gdp='(cd ~/dotfiles && git pull); source ~/.config/fish/config.fish'
+function gdp
+    cd ~/dotfiles && git pull
+    source ~/.config/fish/config.fish
+end
 
 function gbd
     if test -z "$argv[1]"
@@ -55,4 +58,24 @@ function gs
     else
         git switch "$clean_branch"
     end
+end
+
+function gsc
+    if test -z "$argv[1]"
+        echo "Usage: gsc <branch>"
+        return 1
+    end
+    git switch -c "$argv[1]"
+end
+
+function gpo
+    if test -z "$argv[1]"
+        echo "Usage: gpo <branch>"
+        return 1
+    end
+    git push -u origin "$argv[1]"
+end
+
+function gpf
+    git push --force-with-lease
 end

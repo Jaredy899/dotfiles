@@ -70,7 +70,7 @@ end
 # Alert function for macOS
 if test (uname) = "Darwin"
     function alert
-        set last_cmd (history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//")
+        set last_cmd (history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert\$//")
         set status $status
         if test $status = 0
             osascript -e "display notification \"$last_cmd\" with title \"Command Completed\""
@@ -79,7 +79,15 @@ if test (uname) = "Darwin"
         end
     end
 else
-    alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//")"'
+    function alert
+        set last_cmd (history | tail -n1 | sed -e "s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert\$//")
+        set status $status
+        if test $status = 0
+            notify-send --urgency=low -i terminal "$last_cmd"
+        else
+            notify-send --urgency=low -i error "$last_cmd"
+        end
+    end
 end
 
 alias ezsh='$EDITOR ~/dotfiles/zsh/.zshrc.d'
@@ -166,7 +174,11 @@ alias h="history | grep -- "
 alias p="ps aux | grep -- "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k1 -r | head -10"
 alias f="find . | grep -- "
-alias countfiles='for t in files links directories; do echo (find . -type (string sub -l 1 $t) 2>/dev/null | wc -l) "$t"; end'
+function countfiles
+    for t in files links directories
+        echo (find . -type (string sub -l 1 $t) 2>/dev/null | wc -l) "$t"
+    end
+end
 
 # Networking & disks
 if test (uname) = "Darwin"

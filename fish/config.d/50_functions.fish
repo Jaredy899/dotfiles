@@ -161,7 +161,7 @@ function tscp
     if string match -q "*@*" "$host"
         set remote "$host"
     else
-        set remote "${default_user}@${host}"
+        set remote "$default_user@$host"
     end
 
     # Decide whether to use -r (only for directories)
@@ -170,7 +170,7 @@ function tscp
         set scp_opts $scp_opts -r
     end
 
-    scp $scp_opts -- "$src" "${remote}:$dest"
+    scp $scp_opts -- "$src" "$remote:$dest"
 end
 
 # extract archives
