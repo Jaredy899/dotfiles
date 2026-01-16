@@ -61,13 +61,25 @@ gsc() {
 }
 
 gpo() {
-  [ -z "$1" ] && {
-    echo "Usage: gpo <branch>"
+  local branch
+  branch=$(git branch --show-current)
+  [ -z "$branch" ] && {
+    echo "Error: Not in a git repository or no branch detected"
     return 1
   }
-  git push -u origin "$1"
+  git push -u origin "$branch"
 }
 
 gpf() {
-  git push --force-with-lease
+  local branch
+  branch=$(git branch --show-current)
+  [ -z "$branch" ] && {
+    echo "Error: Not in a git repository or no branch detected"
+    return 1
+  }
+  git push --force-with-lease origin "$branch"
+}
+
+ghsync() {
+  gh repo sync && git push
 }
