@@ -28,7 +28,13 @@ lazyg() {
     echo "Usage: lazyg <msg>"
     return 1
   }
-  git add . && git commit -m "$1" && git push
+  local branch
+  branch=$(git branch --show-current)
+  [ -z "$branch" ] && {
+    echo "Error: Not in a git repository or no branch detected"
+    return 1
+  }
+  git add . && git commit -m "$1" && git push origin "$branch"
 }
 
 newb() {
@@ -81,5 +87,11 @@ gpf() {
 }
 
 ghsync() {
-  gh repo sync && git push
+  local branch
+  branch=$(git branch --show-current)
+  [ -z "$branch" ] && {
+    echo "Error: Not in a git repository or no branch detected"
+    return 1
+  }
+  gh repo sync && git push origin "$branch"
 }

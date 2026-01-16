@@ -36,7 +36,12 @@ function lazyg
         echo "Usage: lazyg <msg>"
         return 1
     end
-    git add .; and git commit -m "$argv[1]"; and git push
+    set branch (git branch --show-current)
+    if test -z "$branch"
+        echo "Error: Not in a git repository or no branch detected"
+        return 1
+    end
+    git add .; and git commit -m "$argv[1]"; and git push origin "$branch"
 end
 
 function newb
@@ -69,13 +74,28 @@ function gsc
 end
 
 function gpo
-    if test -z "$argv[1]"
-        echo "Usage: gpo <branch>"
+    set branch (git branch --show-current)
+    if test -z "$branch"
+        echo "Error: Not in a git repository or no branch detected"
         return 1
     end
-    git push -u origin "$argv[1]"
+    git push -u origin "$branch"
 end
 
 function gpf
-    git push --force-with-lease
+    set branch (git branch --show-current)
+    if test -z "$branch"
+        echo "Error: Not in a git repository or no branch detected"
+        return 1
+    end
+    git push --force-with-lease origin "$branch"
+end
+
+function ghsync
+    set branch (git branch --show-current)
+    if test -z "$branch"
+        echo "Error: Not in a git repository or no branch detected"
+        return 1
+    end
+    gh repo sync; and git push origin "$branch"
 end

@@ -28,9 +28,14 @@ function lazyg {
         [Parameter(Mandatory=$true)]
         [string]$message
     )
+    $branch = git branch --show-current
+    if (-not $branch) {
+        Write-Host "Error: Not in a git repository or no branch detected" -ForegroundColor Red
+        return
+    }
     git add .
     git commit -m $message
-    git push
+    git push origin $branch
 }
 
 function newb {
@@ -99,13 +104,31 @@ function gsc {
 }
 
 function gpo {
-    param (
-        [Parameter(Mandatory=$true)]
-        [string]$branch
-    )
+    $branch = git branch --show-current
+    if (-not $branch) {
+        Write-Host "Error: Not in a git repository or no branch detected" -ForegroundColor Red
+        return
+    }
     git push -u origin $branch
 }
 
 function gpf {
-    git push --force-with-lease
+    $branch = git branch --show-current
+    if (-not $branch) {
+        Write-Host "Error: Not in a git repository or no branch detected" -ForegroundColor Red
+        return
+    }
+    git push --force-with-lease origin $branch
+}
+
+function ghsync {
+    $branch = git branch --show-current
+    if (-not $branch) {
+        Write-Host "Error: Not in a git repository or no branch detected" -ForegroundColor Red
+        return
+    }
+    gh repo sync
+    if ($LASTEXITCODE -eq 0) {
+        git push origin $branch
+    }
 }
