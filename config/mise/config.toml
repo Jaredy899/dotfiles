@@ -1,7 +1,12 @@
+[settings]
+experimental = true
+
 [tools]
-zig = "0.14.1"
 node = "latest"
 bun = "latest"
+ruby = "3.4.8"
+# hugo = "latest"
+# zig = "latest"
 # go = "latest"
 # ruby = "latest"
 # erlang = "latest"
