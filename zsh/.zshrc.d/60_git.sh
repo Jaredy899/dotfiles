@@ -8,12 +8,12 @@ gp() { git pull "$@"; }
 alias gdp='(cd ~/dotfiles && git pull); source ~/.zshrc'
 
 gbd() {
-  [ -z "$1" ] && {
-    echo "Usage: gbd <branch>"
-    return 1
-  }
-  git branch -D "$1"
-  git push -d origin "$1" 2>/dev/null || echo "Remote branch '$1' not found or already deleted"
+  local branch
+  branch=$(git branch --all --color=never | sed 's/^[* ]*//' | sort -u | fzf --prompt="Delete branch: ")
+  [ -n "$branch" ] || return
+  clean_branch="${branch#remotes/}"
+  git branch -D "$clean_branch" 2>/dev/null || echo "Local branch '$clean_branch' not found or already deleted"
+  git push -d origin "$clean_branch" 2>/dev/null || echo "Remote branch '$clean_branch' not found or already deleted"
 }
 
 gcom() {
