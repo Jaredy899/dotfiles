@@ -30,8 +30,6 @@ if (-not (Get-Command zoxide -ErrorAction SilentlyContinue)) {
 if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
   winget install -e --id jdx.mise
 }
-if (-not (Get-Module -ListAvailable Terminal-Icons)) {
-  Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
-}
+# Note: Terminal-Icons not needed when using eza (which provides its own icons)
 
 Write-Host "✅ Windows dotfiles installed. Restart PowerShell."
