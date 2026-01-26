@@ -165,6 +165,8 @@ else
 fi
 alias rebootsafe='$ESCALATION_CMD shutdown -r now'
 alias rebootforce='$ESCALATION_CMD shutdown -r -n now'
+alias shutdownsafe='$ESCALATION_CMD shutdown -h now'
+alias shutdownforce='$ESCALATION_CMD shutdown -h -n now'
 alias diskspace="du -S | sort -n -r | more"
 alias folders='du -h --max-depth=1'
 alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'

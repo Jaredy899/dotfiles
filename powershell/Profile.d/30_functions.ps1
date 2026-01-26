@@ -234,3 +234,43 @@ function Trim-String
   )
   return $InputObject.Trim()
 }
+
+# Continuous ping (like ping /t in CMD)
+function ping
+{
+  param(
+    [Parameter(Mandatory=$true, Position=0)]
+    [string]$Target,
+    
+    [Parameter(Mandatory=$false)]
+    [int]$Count = 0
+  )
+  
+  # If Count is 0 or not specified, do continuous ping (default behavior)
+  if ($Count -eq 0) {
+    Write-Host "Pinging $Target with 32 bytes of data:" -ForegroundColor Cyan
+    Write-Host "Press Ctrl+C to stop" -ForegroundColor Yellow
+    Write-Host ""
+    
+    try {
+      # Use -Continuous if available (PowerShell 5.1+)
+      Test-Connection -ComputerName $Target -Continuous -ErrorAction Stop
+    } catch {
+      # Fallback for older PowerShell versions - loop continuously
+      while ($true) {
+        $result = Test-Connection -ComputerName $Target -Count 1 -ErrorAction SilentlyContinue
+        if ($result) {
+          $timestamp = Get-Date -Format "HH:mm:ss"
+          Write-Host "[$timestamp] Reply from $($result.Address): bytes=32 time=$($result.ResponseTime)ms TTL=$($result.ResponseTimeToLive)" -ForegroundColor Green
+        } else {
+          $timestamp = Get-Date -Format "HH:mm:ss"
+          Write-Host "[$timestamp] Request timed out." -ForegroundColor Red
+        }
+        Start-Sleep -Seconds 1
+      }
+    }
+  } else {
+    # Regular ping with specified count
+    Test-Connection -ComputerName $Target -Count $Count
+  }
+}

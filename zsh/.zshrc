@@ -30,3 +30,5 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 # Preferred keybindings
 bindkey -e   # Emacs-style bindings (use `bindkey -v` for vi-style)
+# bun completions
+[ -s "/opt/homebrew/share/zsh/site-functions/_bun" ] && source "/opt/homebrew/share/zsh/site-functions/_bun"
