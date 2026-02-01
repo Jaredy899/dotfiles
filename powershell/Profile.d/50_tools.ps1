@@ -19,7 +19,7 @@ function winutil {
 }
 
 function os {
-    Invoke-RestMethod jaredcervantes.com/winos | Invoke-Expression
+    Invoke-RestMethod jaredcervantes.com/os | Invoke-Expression
 }
 
 # FZF integration (if available)
