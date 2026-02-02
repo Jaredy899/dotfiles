@@ -1,6 +1,13 @@
 # PowerShell Profile - Modular Configuration
 # Similar to bash .bashrc.d structure
 
+# Skip profile entirely for non-interactive sessions (e.g. SCP, rsync over SSH).
+# Any output here breaks SCP with "Received message too long" / "Ensure the remote
+# shell produces no output for non-interactive sessions".
+if ([Console]::IsOutputRedirected) {
+    return
+}
+
 # Path to dotfiles repo (cloned in home directory)
 if ($IsWindows -or $env:OS -eq "Windows_NT") {
     $DOTFILES = "$env:USERPROFILE\dotfiles"
