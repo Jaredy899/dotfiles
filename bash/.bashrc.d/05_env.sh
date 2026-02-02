@@ -31,6 +31,9 @@ pc_add() {
 pc_add 'history -a'
 pc_add 'history -n'
 
+# GPG pinentry TTY (for signing, etc.)
+export GPG_TTY=$(tty)
+
 # XDG base directories
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"

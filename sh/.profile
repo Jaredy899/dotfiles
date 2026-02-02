@@ -4,6 +4,7 @@
 # -------------------------------------------------------------------
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export PAGER=less
+export GPG_TTY=$(tty)
 umask 022
 
 # -------------------------------------------------------------------

@@ -42,6 +42,9 @@ precmd_add() {
 precmd_add 'fc -W'  # Write history after each command
 precmd_add 'fc -R'  # Read history before each command
 
+# GPG pinentry TTY (for signing, etc.)
+export GPG_TTY=$(tty)
+
 # XDG base directories (same as bash)
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
