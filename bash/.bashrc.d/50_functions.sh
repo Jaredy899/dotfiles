@@ -297,31 +297,6 @@ trim() {
   printf '%s' "$var"
 }
 
-# Delete all eopkg files in the repo
-clean-eopkg() {
-  local files=$(rg --files -g 'packages/*/**/*.eopkg')
-  if [ -z "$files" ]; then
-    echo "No .eopkg files found."
-    return
-  fi
-  
-  echo "Found .eopkg files in these directories:"
-  echo "$files" | xargs -r -I{} dirname {} | sort -u
-  echo
-  
-  read -p "Run 'go-task clean' in these directories? (y/n) " -n 1 -r
-  echo
-  
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "$files" \
-      | xargs -r -I{} dirname {} \
-      | sort -u \
-      | xargs -r -I{} sh -c 'cd "{}" && go-task clean && echo "✓ Cleaned {}"'
-  else
-    echo "Cancelled."
-  fi
-}
-
 #Yazi wrapper
 y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
