@@ -32,11 +32,6 @@ alias lzs='lazyssh'
 
 # Misc shortcuts
 alias ff='fastfetch -c all'
-if test (uname) = "Darwin"
-    alias jc='sh (curl -fsSL jaredcervantes.com/mac | psub)'
-else
-    alias jc='sh (curl -fsSL jaredcervantes.com/linux | psub)'
-end
 alias os='sh (curl -fsSL jaredcervantes.com/os | psub)'
 alias nfzf='$EDITOR (fzf -m --preview="bat --color=always {}")'
 
@@ -53,7 +48,7 @@ end
 if test (uname) = "Darwin"
     alias update='updatebrew'
 else
-    alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
+    alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/osutil/refs/heads/main/core/tabs/linux/system-setup/system-update-standalone.sh | sh'
 end
 
 alias convert='heif-convert'

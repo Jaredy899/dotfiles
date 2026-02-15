@@ -10,9 +10,6 @@ function cr {
 }
 
 # Web-based tool functions
-function jc {
-    Invoke-RestMethod jaredcervantes.com/win | Invoke-Expression
-}
 
 function winutil {
     Invoke-RestMethod christitus.com/win | Invoke-Expression

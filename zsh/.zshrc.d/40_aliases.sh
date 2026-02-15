@@ -31,11 +31,6 @@ alias lzs='lazyssh'
 
 # Misc shortcuts
 alias ff='fastfetch -c all'
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias jc='sh <(curl -fsSL jaredcervantes.com/mac)'
-else
-  alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
-fi
 alias os='sh <(curl -fsSL jaredcervantes.com/os)'
 alias nfzf='${EDITOR} "$(fzf -m --preview="bat --color=always {}")"'
 # macOS-specific updater
@@ -51,7 +46,7 @@ updatebrew() {
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias update='updatebrew'
 else
-  alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
+  alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/osutil/refs/heads/main/core/tabs/linux/system-setup/system-update-standalone.sh | sh'
 fi
 alias convert='heif-convert'
 if [[ "$OSTYPE" != "darwin"* ]]; then

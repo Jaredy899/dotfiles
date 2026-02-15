@@ -81,8 +81,7 @@ alias .....='cd ../../../..'
 # -------------------------------------------------------------------
 # Updater Aliases
 # -------------------------------------------------------------------
-alias update='curl https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
-alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
+alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/osutil/refs/heads/main/core/tabs/linux/system-setup/system-update-standalone.sh | sh'
 alias os='sh <(curl -fsSL jaredcervantes.com/os)'
 
 # -------------------------------------------------------------------

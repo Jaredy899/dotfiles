@@ -25,10 +25,9 @@ alias lzs='lazyssh'
 
 # Misc shortcuts
 alias ff='fastfetch -c all'
-alias jc='sh <(curl -fsSL jaredcervantes.com/linux)'
 alias os='sh <(curl -fsSL jaredcervantes.com/os)'
 alias nfzf='$EDITOR "$(fzf -m --preview="bat --color=always {}")"'
-alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/linux/refs/heads/main/installs/updater.sh | sh'
+alias update='curl -fsSL https://raw.githubusercontent.com/Jaredy899/osutil/refs/heads/main/core/tabs/linux/system-setup/system-update-standalone.sh | sh'
 alias convert='heif-convert'
 alias rebuild='$ESCALATION_CMD nixos-rebuild switch'
 alias web='cd /var/www/html'
