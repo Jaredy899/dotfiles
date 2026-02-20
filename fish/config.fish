@@ -21,6 +21,13 @@ if test -d "$DOTFILES/fish/config.d"
     end
 end
 
+# Apply local editor override after fragments (DOTFILES_EDITOR from config.local.fish wins)
+if set -q DOTFILES_EDITOR; and test -n "$DOTFILES_EDITOR"; and command -v "$DOTFILES_EDITOR" >/dev/null 2>&1
+    set -gx EDITOR "$DOTFILES_EDITOR"
+    set -gx VISUAL "$DOTFILES_EDITOR"
+    set -gx SUDO_EDITOR "$DOTFILES_EDITOR"
+end
+
 # ──────────────────────────────
 # Fish-specific configuration
 

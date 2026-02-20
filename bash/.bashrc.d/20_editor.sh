@@ -1,27 +1,23 @@
 #!/usr/bin/env bash
-# Editor and pager settings (editor-agnostic: respects EDITOR or DOTFILES_EDITOR, else fallback)
+# Editor and pager settings (editor-agnostic: EDITOR or DOTFILES_EDITOR, else fallback).
+# Local override: main .bashrc applies DOTFILES_EDITOR after loading fragments so it wins.
 
 if [[ -n "${EDITOR:-}" ]]; then
-  # Respect existing EDITOR; set VISUAL/SUDO_EDITOR to match if unset
   [[ -z "${VISUAL:-}" ]] && export VISUAL="$EDITOR"
   [[ -z "${SUDO_EDITOR:-}" ]] && export SUDO_EDITOR="$EDITOR"
+elif [[ -n "${DOTFILES_EDITOR:-}" ]] && command -v "$DOTFILES_EDITOR" &>/dev/null; then
+  export EDITOR="$DOTFILES_EDITOR"
+  export VISUAL="$DOTFILES_EDITOR"
+  export SUDO_EDITOR="$DOTFILES_EDITOR"
 else
-  # Use DOTFILES_EDITOR if set and available (e.g. export DOTFILES_EDITOR=hx in .bashrc or env.d)
-  if [[ -n "${DOTFILES_EDITOR:-}" ]] && command -v "$DOTFILES_EDITOR" &>/dev/null; then
-    export EDITOR="$DOTFILES_EDITOR"
-    export VISUAL="$DOTFILES_EDITOR"
-    export SUDO_EDITOR="$DOTFILES_EDITOR"
-  else
-    # Fallback: try vi, then nano
-    for editor in vi nano; do
-      if command -v "$editor" &>/dev/null; then
-        export EDITOR="$editor"
-        export VISUAL="$editor"
-        export SUDO_EDITOR="$editor"
-        break
-      fi
-    done
-  fi
+  for editor in vi nano; do
+    if command -v "$editor" &>/dev/null; then
+      export EDITOR="$editor"
+      export VISUAL="$editor"
+      export SUDO_EDITOR="$editor"
+      break
+    fi
+  done
 fi
 
 # Aliases: e opens $EDITOR; se runs sudoedit (uses SUDO_EDITOR)

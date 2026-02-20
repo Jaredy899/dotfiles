@@ -19,6 +19,13 @@ if [[ -d "$DOTFILES/zsh/.zshrc.d" ]]; then
   unset rc
 fi
 
+# Apply local editor override after fragments (DOTFILES_EDITOR from .zshrc.local wins)
+if [[ -n "${DOTFILES_EDITOR:-}" ]] && command -v "$DOTFILES_EDITOR" &>/dev/null; then
+  export EDITOR="$DOTFILES_EDITOR"
+  export VISUAL="$DOTFILES_EDITOR"
+  export SUDO_EDITOR="$DOTFILES_EDITOR"
+fi
+
 # ──────────────────────────────
 # macOS-specific / Zsh-specific config
 

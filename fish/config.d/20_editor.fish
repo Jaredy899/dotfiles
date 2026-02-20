@@ -1,25 +1,21 @@
 #!/usr/bin/env fish
-# Editor and pager settings (editor-agnostic: respects EDITOR or DOTFILES_EDITOR, else fallback)
+# Editor and pager settings (editor-agnostic: EDITOR or DOTFILES_EDITOR, else fallback).
+# Local override: config.fish applies DOTFILES_EDITOR after loading config.d so it wins.
 
 if set -q EDITOR; and test -n "$EDITOR"
-    # Respect existing EDITOR; set VISUAL/SUDO_EDITOR to match if unset
     set -q VISUAL; or set -gx VISUAL "$EDITOR"
     set -q SUDO_EDITOR; or set -gx SUDO_EDITOR "$EDITOR"
+else if set -q DOTFILES_EDITOR; and test -n "$DOTFILES_EDITOR"; and command -v "$DOTFILES_EDITOR" >/dev/null 2>&1
+    set -gx EDITOR "$DOTFILES_EDITOR"
+    set -gx VISUAL "$DOTFILES_EDITOR"
+    set -gx SUDO_EDITOR "$DOTFILES_EDITOR"
 else
-    # Use DOTFILES_EDITOR if set and available (e.g. in config.local.fish)
-    if set -q DOTFILES_EDITOR; and test -n "$DOTFILES_EDITOR"; and command -v "$DOTFILES_EDITOR" >/dev/null 2>&1
-        set -gx EDITOR "$DOTFILES_EDITOR"
-        set -gx VISUAL "$DOTFILES_EDITOR"
-        set -gx SUDO_EDITOR "$DOTFILES_EDITOR"
-    else
-        # Fallback: try vi, then nano
-        for editor in vi nano
-            if command -v $editor >/dev/null 2>&1
-                set -gx EDITOR $editor
-                set -gx VISUAL $editor
-                set -gx SUDO_EDITOR $editor
-                break
-            end
+    for editor in vi nano
+        if command -v $editor >/dev/null 2>&1
+            set -gx EDITOR $editor
+            set -gx VISUAL $editor
+            set -gx SUDO_EDITOR $editor
+            break
         end
     end
 end

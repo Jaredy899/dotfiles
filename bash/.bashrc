@@ -26,3 +26,10 @@ if [[ -d "$DOTFILES/bash/.bashrc.d" ]]; then
   unset rc
 fi
 
+# Apply local editor override after fragments (DOTFILES_EDITOR from .bashrc.local wins)
+if [[ -n "${DOTFILES_EDITOR:-}" ]] && command -v "$DOTFILES_EDITOR" &>/dev/null; then
+  export EDITOR="$DOTFILES_EDITOR"
+  export VISUAL="$DOTFILES_EDITOR"
+  export SUDO_EDITOR="$DOTFILES_EDITOR"
+fi
+
