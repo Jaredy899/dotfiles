@@ -20,9 +20,13 @@ else
     end
 end
 
-# Aliases: e opens $EDITOR; se runs editor as root (ESCALATION_CMD + $EDITOR)
+# Aliases: e opens $EDITOR; se runs editor as root with your config (for Helix, etc.)
 alias e="$EDITOR"
-alias se='$ESCALATION_CMD $EDITOR'
+function se
+  set -l cfg (string default "$HOME/.config" $XDG_CONFIG_HOME)
+  set -l data (string default "$HOME/.local/share" $XDG_DATA_HOME)
+  env XDG_CONFIG_HOME="$cfg" XDG_DATA_HOME="$data" $ESCALATION_CMD $EDITOR $argv
+end
 
 # less + manpage colors (Fish equivalent)
 set -gx LESS_TERMCAP_mb (printf "\033[01;31m")
