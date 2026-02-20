@@ -23,7 +23,7 @@ fi
 
 # Aliases: e opens $EDITOR; se runs editor as root with your config (for Helix, etc.)
 alias e="$EDITOR"
-se() {
+se () {
   local cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
   local data="${XDG_DATA_HOME:-$HOME/.local/share}"
   $ESCALATION_CMD env XDG_CONFIG_HOME="$cfg" XDG_DATA_HOME="$data" "$EDITOR" "$@"
