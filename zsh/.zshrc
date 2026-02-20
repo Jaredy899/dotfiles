@@ -2,7 +2,14 @@
 # shellcheck disable=SC1071
 # ~/.zshrc -- bootstrapper for modular dotfiles (macOS)
 
-DOTFILES="$HOME/dotfiles"
+# Local overrides (not in repo — safe for machine-specific settings).
+# Example ~/.zshrc.local:
+#   export DOTFILES_EDITOR=hx
+#   export DOTFILES=/opt/dotfiles
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+# Path to dotfiles repo (local can override by setting DOTFILES before this runs)
+DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # Load modular zshrc.d scripts (aliases, functions, tools)
 if [[ -d "$DOTFILES/zsh/.zshrc.d" ]]; then

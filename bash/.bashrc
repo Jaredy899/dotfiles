@@ -5,8 +5,17 @@
 # shellcheck disable=SC1091
 [[ -r /etc/bashrc ]] && . /etc/bashrc
 
-# Path to dotfiles repo
-DOTFILES="$HOME/dotfiles"
+# Local overrides (not in repo — safe for machine-specific settings).
+# Example ~/.bashrc.local:
+#   export DOTFILES_EDITOR=hx
+#   export DOTFILES=/opt/dotfiles
+#   # Solus build helpers:
+#   [[ -r "$HOME/solus-packages/common/Scripts/helpers.sh" ]] && . "$HOME/solus-packages/common/Scripts/helpers.sh"
+# shellcheck disable=SC1090
+[[ -r "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
+
+# Path to dotfiles repo (local can override by setting DOTFILES before this runs)
+DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # Load modular bashrc fragments
 if [[ -d "$DOTFILES/bash/.bashrc.d" ]]; then

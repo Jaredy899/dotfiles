@@ -1,8 +1,16 @@
 #!/usr/bin/env fish
 # ~/.config/fish/config.fish -- Fish shell configuration
 
-# Set DOTFILES variable
-set -gx DOTFILES "$HOME/dotfiles"
+# Local overrides (not in repo — safe for machine-specific settings).
+# Example ~/.config/fish/config.local.fish:
+#   set -gx DOTFILES_EDITOR hx
+#   set -gx DOTFILES /opt/dotfiles
+if test -r "$HOME/.config/fish/config.local.fish"
+    source "$HOME/.config/fish/config.local.fish"
+end
+
+# Path to dotfiles repo (local can override by setting DOTFILES before this runs)
+set -q DOTFILES; or set -gx DOTFILES "$HOME/dotfiles"
 
 # Load modular fish config.d scripts
 if test -d "$DOTFILES/fish/config.d"

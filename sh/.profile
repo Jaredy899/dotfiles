@@ -7,6 +7,13 @@ export PAGER=less
 export GPG_TTY=$(tty)
 umask 022
 
+# Local overrides (not in repo — safe for machine-specific settings).
+# Example ~/.profile.local:
+#   export EDITOR=hx
+#   export DOTFILES=/opt/dotfiles
+# shellcheck disable=SC1090
+[ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+
 # -------------------------------------------------------------------
 # Prompt Setup
 # -------------------------------------------------------------------

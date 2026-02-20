@@ -1,21 +1,35 @@
 #!/usr/bin/env zsh
 # shellcheck disable=SC1071
-# Editor and pager settings
+# Editor and pager settings (editor-agnostic: respects EDITOR or DOTFILES_EDITOR, else fallback)
 
-if command -v nvim &>/dev/null; then
-  export EDITOR="nvim"
-  export VISUAL="nvim"
-  export SUDO_EDITOR="nvim"
-  alias vim='nvim'
-  alias vi='nvim'
-  alias svi='$ESCALATION_CMD -E nvim'
-  alias vis='nvim "+set si"'
+if [[ -n "${EDITOR:-}" ]]; then
+  # Respect existing EDITOR; set VISUAL/SUDO_EDITOR to match if unset
+  [[ -z "${VISUAL:-}" ]] && export VISUAL="$EDITOR"
+  [[ -z "${SUDO_EDITOR:-}" ]] && export SUDO_EDITOR="$EDITOR"
 else
-  export EDITOR="vim"
-  export VISUAL="vim"
+  # Use DOTFILES_EDITOR if set and available (e.g. in .zshrc.local)
+  if [[ -n "${DOTFILES_EDITOR:-}" ]] && command -v "$DOTFILES_EDITOR" &>/dev/null; then
+    export EDITOR="$DOTFILES_EDITOR"
+    export VISUAL="$DOTFILES_EDITOR"
+    export SUDO_EDITOR="$DOTFILES_EDITOR"
+  else
+    # Fallback: try vi, then nano
+    for editor in vi nano; do
+      if command -v "$editor" &>/dev/null; then
+        export EDITOR="$editor"
+        export VISUAL="$editor"
+        export SUDO_EDITOR="$editor"
+        break
+      fi
+    done
+  fi
 fi
 
-# less + manpage colors (same in zsh)
+# Aliases: e opens $EDITOR; se runs sudoedit (uses SUDO_EDITOR)
+alias e="$EDITOR"
+alias se='sudoedit'
+
+# less + manpage colors
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
