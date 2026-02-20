@@ -20,9 +20,9 @@ else
   done
 fi
 
-# Aliases: e opens $EDITOR; se runs sudoedit (uses SUDO_EDITOR)
+# Aliases: e opens $EDITOR; se runs editor as root (ESCALATION_CMD + $EDITOR)
 alias e="$EDITOR"
-alias se='sudoedit'
+alias se='$ESCALATION_CMD $EDITOR'
 
 # less + manpage colors
 export LESS_TERMCAP_mb=$'\E[01;31m'
