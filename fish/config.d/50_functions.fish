@@ -33,11 +33,27 @@ function distribution
     printf '%s\n' $dtype
 end
 
-# Prefer bat/batcat for cat if present
-if command -v bat >/dev/null 2>&1
-    alias cat='bat'
-else if command -v batcat >/dev/null 2>&1
-    alias cat='batcat'
+# Prefer bat/batcat for cat; use glow for .md files when available
+function cat
+    set use_glow 0
+    if test -t 1
+        and command -v glow >/dev/null 2>&1
+        for arg in $argv
+            if string match -q '*.md' -- $arg
+                set use_glow 1
+                break
+            end
+        end
+    end
+    if test $use_glow -eq 1
+        command glow $argv
+    else if command -v bat >/dev/null 2>&1
+        bat $argv
+    else if command -v batcat >/dev/null 2>&1
+        batcat $argv
+    else
+        command cat $argv
+    end
 end
 
 # Safe rm function - use trash for safe deletion, rm for force operations

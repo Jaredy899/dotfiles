@@ -184,9 +184,24 @@ alias ungz='tar -xvzf'
 # Functions
 # -------------------------------------------------------------------
 
-if command -v bat >/dev/null 2>&1; then
-    alias cat='bat'
-fi
+# Prefer bat/batcat for cat; use glow for .md files when available
+cat() {
+    use_glow=0
+    if [ -t 1 ] && command -v glow >/dev/null 2>&1; then
+        for arg in "$@"; do
+            case "$arg" in *.md) use_glow=1; break ;; esac
+        done
+    fi
+    if [ "$use_glow" -eq 1 ]; then
+        command glow "$@"
+    elif command -v bat >/dev/null 2>&1; then
+        bat "$@"
+    elif command -v batcat >/dev/null 2>&1; then
+        batcat "$@"
+    else
+        command cat "$@"
+    fi
+}
 
 ver() {
     cat /etc/alpine-release

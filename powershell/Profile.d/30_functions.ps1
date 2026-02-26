@@ -24,35 +24,42 @@ function mkdirg
   Set-Location $Path
 }
 
-# Check if "bat" is available
+# cat: use glow for .md files when available, otherwise bat or Get-Content
+if (Test-Path Alias:cat) { Remove-Item Alias:cat }
+function cat
+{
+  $useGlow = $false
+  $isTerminal = $true
+  try { $isTerminal = -not [Console]::IsOutputRedirected } catch {}
+  if ($isTerminal -and (Get-Command glow -ErrorAction SilentlyContinue))
+  {
+    foreach ($arg in $args)
+    {
+      if ($arg -like '*.md') { $useGlow = $true; break }
+    }
+  }
+  if ($useGlow)
+  {
+    glow @args
+  }
+  elseif (Get-Command bat -ErrorAction SilentlyContinue)
+  {
+    bat @args
+  }
+  else
+  {
+    Get-Content @args
+  }
+}
+
+# catp: plain output for piping
 if (Get-Command bat -ErrorAction SilentlyContinue)
 {
-  # Remove existing alias if it exists (like cat -> Get-Content)
-  if (Test-Path Alias:cat)
-  {
-    Remove-Item Alias:cat
-  }
-
-  # Alias cat to bat, forcing if necessary
-  Set-Alias cat bat -Force
-
-  # Define catp using bat with options
-  function catp
-  {
-    bat --plain --paging=never @args
-  }
-} else
+  function catp { bat --plain --paging=never @args }
+}
+else
 {
-  # If bat isn't found, keep PowerShell's normal cat behavior if it exists
-  if (-not (Test-Path Alias:cat))
-  {
-    Set-Alias cat Get-Content -Force
-  }
-
-  function catp
-  {
-    Write-Warning "bat not found — catp unavailable."
-  }
+  function catp { Write-Warning "bat not found — catp unavailable." }
 }
 
 # Archive extraction function (PowerShell equivalent)
