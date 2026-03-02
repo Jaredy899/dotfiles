@@ -34,12 +34,24 @@ distribution() {
 }
 
 
-# Prefer bat/batcat for cat if present
-if command -v bat &>/dev/null; then
-  alias cat='bat'
-elif command -v batcat &>/dev/null; then
-  alias cat='batcat'
-fi
+# Prefer bat/batcat for cat; use glow for .md files when available
+cat() {
+  local use_glow=0
+  if [[ -t 1 ]] && command -v glow &>/dev/null; then
+    for arg in "$@"; do
+      [[ "$arg" == *.md ]] && { use_glow=1; break; }
+    done
+  fi
+  if ((use_glow)); then
+    command glow "$@"
+  elif command -v bat &>/dev/null; then
+    bat "$@"
+  elif command -v batcat &>/dev/null; then
+    batcat "$@"
+  else
+    command cat "$@"
+  fi
+}
 
 # Safe rm function - use trash for safe deletion, rm for force operations
 rm() {
