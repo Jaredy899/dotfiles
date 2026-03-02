@@ -35,6 +35,7 @@ if (Get-Command eza -ErrorAction SilentlyContinue) {
 
 Set-Alias -Name grep -Value Select-String
 Set-Alias -Name which -Value Get-Command
+Set-Alias -Name lzs -Value lazyssh
 
 # Directory navigation aliases with auto-ls
 function home { Set-Location ~; ls }
