@@ -95,3 +95,21 @@ ghsync() {
   }
   gh repo sync && git push origin "$branch"
 }
+
+# Commit all changes in current dir after confirming git status
+function quickcommit() {
+    echo "=== git status ==="
+    git status --short -- .
+    echo "=================="
+
+    read -p "Commit all changes in this directory (y/N)? " -n 1 -r
+    echo
+
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborted."
+        return 1
+    fi
+
+    git add .
+    git commit -s
+}
