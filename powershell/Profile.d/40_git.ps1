@@ -132,3 +132,14 @@ function ghsync {
         git push origin $branch
     }
 }
+
+function gri { git rebase -i main }
+function grc { git rebase --continue }
+function gra { git rebase --abort }
+
+function gam {
+    git add .
+    if ($LASTEXITCODE -eq 0) {
+        git commit --amend -s
+    }
+}

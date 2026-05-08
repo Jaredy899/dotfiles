@@ -99,3 +99,19 @@ function ghsync
     end
     gh repo sync; and git push origin "$branch"
 end
+
+function gri
+    git rebase -i main
+end
+
+function grc
+    git rebase --continue
+end
+
+function gra
+    git rebase --abort
+end
+
+function gam
+    git add .; and git commit --amend -s
+end

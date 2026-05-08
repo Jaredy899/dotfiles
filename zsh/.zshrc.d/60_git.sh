@@ -96,3 +96,9 @@ ghsync() {
   }
   gh repo sync && git push origin "$branch"
 }
+
+# Rebase / amend shortcuts
+alias gri='git rebase -i main'
+alias grc='git rebase --continue'
+alias gra='git rebase --abort'
+alias gam='git add . && git commit --amend -s'
