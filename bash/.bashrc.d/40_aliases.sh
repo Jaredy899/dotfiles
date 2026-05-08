@@ -16,6 +16,22 @@ if command -v nala &>/dev/null; then
   apt() { $ESCALATION_CMD nala "$@"; }
 fi
 
+# Solus eopkg helpers
+if command -v eopkg &>/dev/null; then
+  alias eit='$ESCALATION_CMD eopkg it'
+  alias eil='$ESCALATION_CMD eopkg it ./*.eopkg'
+  alias erm='$ESCALATION_CMD eopkg rm -y'
+  alias eup='$ESCALATION_CMD eopkg up -y'
+  alias eur='$ESCALATION_CMD eopkg ur'
+  alias edc='$ESCALATION_CMD eopkg dc'
+  alias ermo='$ESCALATION_CMD eopkg remove-orphans'
+  alias esr='eopkg sr'
+  alias einfo='eopkg info'
+  alias eli='eopkg li'
+  alias ela='eopkg la'
+  alias ehist='eopkg history'
+fi
+
 # Docker helpers
 alias dup='docker compose up -d --force-recreate'
 alias docker-clean='docker container prune -f && docker image prune -f && docker network prune -f && docker volume prune -f'
