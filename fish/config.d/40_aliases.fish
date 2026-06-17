@@ -13,7 +13,7 @@ alias freshclam='$ESCALATION_CMD freshclam'
 
 # Package manager helpers
 if test (uname) = "Darwin"
-    alias brewup='brew update && brew upgrade && brew cleanup'
+    alias brewup='brew update && brew upgrade -y && brew cleanup'
 else
     alias apt-get='$ESCALATION_CMD apt-get'
     if command -v nala >/dev/null 2>&1
@@ -39,8 +39,8 @@ alias nfzf='$EDITOR (fzf -m --preview="bat --color=always {}")'
 function updatebrew
     echo "🔄 Updating Homebrew..."
     brew update
-    brew upgrade
-    brew upgrade --cask --greedy
+    brew upgrade -y
+    brew upgrade --cask --greedy -y
     brew cleanup --prune=all
     brew autoremove
 end
