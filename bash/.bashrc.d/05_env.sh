@@ -9,8 +9,15 @@ export HISTCONTROL=erasedups:ignoredups:ignorespace
 shopt -s histappend
 shopt -s checkwinsize
 
+# Prompt hooks can trigger bash 5.3.x segfaults (PROMPT_COMMAND + aliases).
+# Enabled only when BASHRC_PROMPT_HOOKS=1 in ~/.bashrc.local (after bash update).
+__bash_prompt_hooks_ok() {
+  [[ ${BASHRC_PROMPT_HOOKS:-0} == 1 && $- == *i* && -z ${BASH_POSIXLY_CORRECT:-} ]]
+}
+
 # Prompt command helper
 pc_add() {
+  __bash_prompt_hooks_ok || return 0
   local add="$1"
   add="${add#"${add%%[![:space:]]*}"}"
   add="${add%"${add##*[![:space:]]}"}"

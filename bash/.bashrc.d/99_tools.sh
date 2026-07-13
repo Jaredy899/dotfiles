@@ -4,18 +4,21 @@
 alias bd='bun dev'
 alias cr='cargo run'
 
-# Fzf bindings
-if command -v fzf >/dev/null 2>&1; then
-  eval "$(fzf --bash)"
-fi
+# Prompt integrations — skip in bash --posix to avoid PROMPT_COMMAND segfaults.
+if __bash_prompt_hooks_ok 2>/dev/null; then
+  # Fzf bindings
+  if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+  fi
 
-# Starship prompt
-if command -v starship &>/dev/null; then
-  eval "$(starship init bash)"
-fi
+  # Starship prompt
+  if command -v starship &>/dev/null; then
+    eval "$(starship init bash)"
+  fi
 
-if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate bash)"
+  if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash)"
+  fi
 fi
 
 # Auto-start X if TTY1 and dwm config found
@@ -30,6 +33,6 @@ fi
 # -------------------------------------------------------------------
 # Zoxide (must be at the very end of shell configuration)
 # -------------------------------------------------------------------
-if command -v zoxide >/dev/null 2>&1; then
+if __bash_prompt_hooks_ok 2>/dev/null && command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init bash)"
 fi
