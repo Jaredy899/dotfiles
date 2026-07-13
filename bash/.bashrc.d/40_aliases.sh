@@ -16,7 +16,7 @@ if command -v nala &>/dev/null; then
   apt() { $ESCALATION_CMD nala "$@"; }
 fi
 
-# Solus eopkg helpers
+# Package manager helpers (same names for eopkg / moss)
 if command -v eopkg &>/dev/null; then
   alias eit='$ESCALATION_CMD eopkg it'
   alias eil='$ESCALATION_CMD eopkg it ./*.eopkg'
@@ -30,6 +30,53 @@ if command -v eopkg &>/dev/null; then
   alias eli='eopkg li'
   alias ela='eopkg la'
   alias ehist='eopkg history'
+elif command -v moss &>/dev/null; then
+  alias eit='$ESCALATION_CMD moss it'
+  alias erm='$ESCALATION_CMD moss rm -y'
+  alias eup='$ESCALATION_CMD moss sync -u -y'
+  alias eur='$ESCALATION_CMD moss repo update'
+  alias edc='$ESCALATION_CMD moss cache prune -y'
+  alias esr='moss search'
+  alias einfo='moss info'
+  alias eli='moss list installed'
+  alias ela='moss list available'
+  alias ehist='moss state list'
+
+  # Local install: mv to local repo, refresh, install package
+  eil() {
+    local pkg="${1:-$(basename "$PWD")}"
+    just mv-local &&
+      $ESCALATION_CMD moss repo update &&
+      $ESCALATION_CMD moss it "$pkg"
+  }
+fi
+
+# Packaging helpers (just on AerynOS, go-task on Solus)
+if command -v just &>/dev/null; then
+  alias jbuild='just build'
+  alias jbump='just bump'
+  alias jclean='just clean'
+  alias jcl='just clean-local'
+  alias jls='just ls-local'
+  alias jmv='just mv-local'
+  alias jupdates='just updates'
+  alias jinit='just init'
+  alias jch='just chroot'
+elif command -v go-task &>/dev/null; then
+  alias jbuild='go-task build'
+  alias jbump='go-task bump'
+  alias jclean='go-task clean'
+  alias jcl='go-task clean-local'
+  alias jls='go-task list-local'
+  alias jupdates='go-task updatecheck'
+  alias jinit='go-task init'
+fi
+
+# Autoupdate recipe (boulder / go-task)
+if command -v boulder &>/dev/null; then
+  alias jup='boulder recipe update'
+elif command -v go-task &>/dev/null; then
+  alias jup='go-task autoupdate'
 fi
 
 # Docker helpers

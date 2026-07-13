@@ -23,6 +23,72 @@ else
     end
 end
 
+# Package manager helpers (same names for eopkg / moss)
+if command -v eopkg >/dev/null 2>&1
+    alias eit='$ESCALATION_CMD eopkg it'
+    alias eil='$ESCALATION_CMD eopkg it ./*.eopkg'
+    alias erm='$ESCALATION_CMD eopkg rm -y'
+    alias eup='$ESCALATION_CMD eopkg up -y'
+    alias eur='$ESCALATION_CMD eopkg ur'
+    alias edc='$ESCALATION_CMD eopkg dc'
+    alias ermo='$ESCALATION_CMD eopkg remove-orphans'
+    alias esr='eopkg sr'
+    alias einfo='eopkg info'
+    alias eli='eopkg li'
+    alias ela='eopkg la'
+    alias ehist='eopkg history'
+else if command -v moss >/dev/null 2>&1
+    alias eit='$ESCALATION_CMD moss it'
+    alias erm='$ESCALATION_CMD moss rm -y'
+    alias eup='$ESCALATION_CMD moss sync -u -y'
+    alias eur='$ESCALATION_CMD moss repo update'
+    alias edc='$ESCALATION_CMD moss cache prune -y'
+    alias esr='moss search'
+    alias einfo='moss info'
+    alias eli='moss list installed'
+    alias ela='moss list available'
+    alias ehist='moss state list'
+
+    # Local install: mv to local repo, refresh, install package
+    function eil
+        set -l pkg $argv[1]
+        if test -z "$pkg"
+            set pkg (basename $PWD)
+        end
+        just mv-local
+        and $ESCALATION_CMD moss repo update
+        and $ESCALATION_CMD moss it $pkg
+    end
+end
+
+# Packaging helpers (just on AerynOS, go-task on Solus)
+if command -v just >/dev/null 2>&1
+    alias jbuild='just build'
+    alias jbump='just bump'
+    alias jclean='just clean'
+    alias jcl='just clean-local'
+    alias jls='just ls-local'
+    alias jmv='just mv-local'
+    alias jupdates='just updates'
+    alias jinit='just init'
+    alias jch='just chroot'
+else if command -v go-task >/dev/null 2>&1
+    alias jbuild='go-task build'
+    alias jbump='go-task bump'
+    alias jclean='go-task clean'
+    alias jcl='go-task clean-local'
+    alias jls='go-task list-local'
+    alias jupdates='go-task updatecheck'
+    alias jinit='go-task init'
+end
+
+# Autoupdate recipe (boulder / go-task)
+if command -v boulder >/dev/null 2>&1
+    alias jup='boulder recipe update'
+else if command -v go-task >/dev/null 2>&1
+    alias jup='go-task autoupdate'
+end
+
 # Docker helpers
 alias dup='docker compose up -d --force-recreate'
 alias docker-clean='docker container prune -f && docker image prune -f && docker network prune -f && docker volume prune -f'

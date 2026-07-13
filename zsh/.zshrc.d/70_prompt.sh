@@ -7,7 +7,11 @@ __pcd_prev_pwd="$PWD"
 list_if_cd() {
   if [[ "$PWD" != "$__pcd_prev_pwd" ]]; then
     __pcd_prev_pwd="$PWD"
-    ls
+    if command -v eza &>/dev/null; then
+      eza -a --icons --group-directories-first
+    else
+      command ls -aFh --color=always
+    fi
   fi
 }
 
